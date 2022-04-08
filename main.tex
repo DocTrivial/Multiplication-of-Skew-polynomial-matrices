@@ -1,0 +1,285 @@
+\documentclass[9pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage{amsthm,amsmath,amssymb,amsfonts,bbm}
+\usepackage{algorithm, pseudocode}
+\usepackage{algpseudocode}
+\usepackage{physics}
+\usepackage[margin=1.2in]{geometry}
+\usepackage{graphicx} % For including images
+\usepackage[backend=biber, style=alphabetic, sorting=ynt, natbib=true]{biblatex}
+\addbibresource{bib.bib}
+% use this to remove indents
+\setlength{\parindent}{0pt}
+
+\title{On the Complexity of Matrix Multiplication over Rings of Skew Polynomials over Finite Fields}
+\author{Yossef Musleh}
+\date{}
+
+\theoremstyle{plain}
+\newtheorem{thm}{Theorem}[section]
+\newtheorem{lem}[thm]{Lemma}
+\newtheorem{definition}[thm]{Definition}
+\newtheorem{cor}[thm]{Corollary}
+\newtheorem{prob}[thm]{Problem}
+
+\theoremstyle{definition}
+\newtheorem{defn}{Definition}[section]
+\newtheorem{exmp}{Example}[section]
+
+
+\theoremstyle{remark}
+\newtheorem*{rem}{Remark}
+\newtheorem*{note}{Note}
+
+\newcommand{\E}{\mathrm{E}}
+\newcommand{\Var}{\mathrm{Var}}
+\newcommand{\cD}{\mathcal{D}}
+\newcommand{\cM}{\mathcal{M}}
+\newcommand{\cA}{\mathcal{A}}
+\newcommand{\cX}{\mathcal{X}}
+\newcommand{\cN}{\mathcal{N}}
+\newcommand{\cS}{\mathcal{S}}
+\newcommand{\cP}{\mathcal{P}}
+\newcommand{\cG}{\mathcal{G}}
+\newcommand{\cO}{\mathcal{O}}
+\newcommand{\Oa}{\mathbb{O}}
+\newcommand{\cR}{\mathcal{R}}
+\newcommand{\bR}{\mathbb{R}}
+\newcommand{\bC}{\mathbb{C}}
+\newcommand{\bE}{\mathbb{E}}
+\newcommand{\cB}{\mathcal{B}}
+\newcommand{\cQ}{\mathcal{Q}}
+\newtheorem*{proposition*}{Proposition}
+
+%\newtheorem{definition}{Definition}
+%\newtheorem{theorem}{Theorem}
+%\newtheorem{lemma}{Lemma}
+%\newtheorem{claim}{Claim}
+%\newtheorem{sketch}{Sketch of Proof}
+%\newtheorem{example}{Example}
+%\newtheorem{problem}{Problem}
+%\newtheorem{prop}{Proposition}
+%\newtheorem{statement}{Problem Statement}
+%\newtheorem*{statement*}{Problem Statement}
+%\newtheorem*{definition*}{Definition}
+%\newtheorem*{theorem*}{Theorem}
+%\newtheorem*{lemma*}{Lemma}
+%\newtheorem*{claim*}{Claim}
+%\newtheorem*{sketch*}{Sketch of Proof}
+%\newtheorem*{example*}{Example}
+%\newtheorem*{problem*}{Problem}
+%\newtheorem*{proposition*}{Proposition}
+
+\newcommand{\M}{\mathsf{M}}
+
+\newcommand{\A}{\mathbb{A}}
+\newcommand{\Q}{\mathbb{Q}}
+\renewcommand{\P}{\mathbb{P}}
+\newcommand{\K}{\mathbb{K}}
+\newcommand{\F}{\mathbb{F}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\N}{\mathbb{N}}
+%\renewcommand{\L}{\mathbb{L}}
+\renewcommand{\L}{\F_{q^n}}
+\newcommand{\ang}[1]{\{#1\}}
+\newcommand{\mb}{\overline{\mathcal{M}}}
+\newcommand{\mm}{\mathcal{M}}
+\newcommand{\ee}{\mathcal{L}}
+\newcommand{\kk}{\mathcal{K}}
+\newcommand{\lm}{\textnormal{lm}}
+\newcommand{\rr}{\mathcal{R}}
+\newcommand{\pp}{\mathcal{P}}
+\newcommand{\ints}{\mathbb{Z}}
+%\newcommand{\cN}{\mathcal{N}}
+\newcommand{\ar}{\mathcal{A}}
+%\newcommand{\cO}{\mathcal{O}}
+\newcommand{\la}{\left\langle}
+\newcommand{\ra}{\right\rangle}
+\newcommand{\red}{\textnormal{red}}
+%\newcommand{\cor}{\textnormal{Corr}}
+\newcommand{\pe}{\textnormal{Per}}
+\newcommand{\inn}{\textnormal{Inn}}
+\newcommand{\reg}{\textnormal{reg}}
+\newcommand{\supp}{\textnormal{supp}}
+\newcommand{\mut}{\textnormal{MutNorm}}
+\newcommand{\bas}{\textnormal{base}}
+\newcommand{\ngen}{\textnormal{NormGen}}
+\newcommand{\intt}{\textnormal{Int}}
+\newcommand{\gen}{\textnormal{gen}}
+%\newcommand{\norm}{\textnormal{norm}}
+\newcommand{\maxn}{\textnormal{MaxNorm}}
+\newcommand{\act}{\textnormal{act}}
+\newcommand{\aff}{\mathbb{A}}
+\newcommand{\affn}{\mathbb{A}^n}
+\newcommand{\spa}{\textnormal{ }}
+\newcommand{\lcm}{\textnormal{lcm}}
+\newcommand{\divi}{\textnormal{div}}
+\newcommand{\Reg}{\textnormal{Reg}}
+\newcommand{\spec}{\textnormal{Spec}}
+\newcommand{\conv}{\textnormal{Conv}}
+\newcommand{\cone}{\textnormal{Cone}}
+\newcommand{\minpol}{\textnormal{MinPoly}_{\mathbb{F}_q}}
+\newcommand{\modu}{\textnormal{ mod }}
+\newcommand{\frakf}{\mathfrak{f}}
+\newcommand{\frakp}{\mathfrak{p}}
+\newcommand{\frakr}{\mathfrak{r}}
+\newcommand{\softO}{O\tilde{~}}
+\newcommand{\sring}{\F_{q^n}\{x; \sigma\}}
+\newcommand{\hatr}{\hat{r}}
+%\newcommand{\comm}{\mathbb{F}_q[\tau^n]}
+\newcommand{\reduc}{\lambda}
+%\newcommand{\comm}{\mathbb{F}_q[\tau^n]}
+\newcommand{\sqdet}{\det}
+\newcommand{\enom}{\textnormal{End}}
+
+% Definitions of handy macros can go here
+
+\newcommand{\dataset}{{\cal D}}
+\newcommand{\fracpartial}[2]{\frac{\partial #1}{\partial  #2}}
+
+
+
+\newcommand{\htheta}{\hat{\theta}}
+
+
+
+\begin{document}
+
+\maketitle
+
+\section{Introduction}
+
+In this work we will explore the multiplication of matrices of skew polynomials over a finite field $\mathbb{F}_q$. In particular, we will examine the implications of a number of algorithms on the bit complexity of matrix multiplication and determine whether there are any improvements to naive estimates based on black-box matrix multiplication algorithms.
+
+
+Throughout this work we work over a pair of finite field $\F_{q} \subset \F_{q^n}$. We let $\sigma$ denote an automorphism of $\F_{q^n}$ fixing $\F_q$. We define the ring of skew-polynomials $\F_{q^n}\{x; \sigma\}$ to be the set of polynomials in the variable $x$ with coefficients in $\F_{q^n}$, $\sum_{i=0}^d a_i x^i$ subject to the commutation rule $xa = \sigma(a)x$. $\sring_{<d}$ denotes skew polynomials with degree strictly less than $d$ with similar notation for $\leq, >, =$, etc.
+
+\subsection{Algorithmic Background}
+
+For analyzing the complexity of operations conducted over finite fields, an algebraic model counting base field operations is typically used. However, there are certain cases where a precise algebraic description is unsuitable. Of particular relevance to operations over skew polynomials is Kedlaya and Umans' celebrated modular composition algorithm \cite{KedUman}. Given polynomials $f, g, h \in \F_{q}[T]$ each of degree at most $d$, the modular composition algorithm computes $f(g) \bmod h$. The classical algorithm due to Brent and Kung uses $O(d^{(\omega + 1)/2})$ field operations in $\F_{q}$. The Kedlaya \& Umans algorithm does not admit a simple algebraic description of its complexity, but offers a bit complexity of $(d^{\theta} \log q)^{1+o(1)}$; $\theta$ was originally shown to be $1 + \epsilon$ but we may take $\theta = 1$. To allow for the incorporation of the Kedlaya \& Umans modular composition algorithm this work will use a bit complexity model rather than the usual algebraic one. 
+
+We will use $M(d)$ to indicate the complexity of multiplying two degree $d$ polynomials over $\F_q$. Typically, $M(d) = (d \log(q))^{1 + o(1)}$. Moreover, we let $\omega$ denote the real number such that two $r \times r$ matrices with entries in a ring $R$ can be multiplied using at most $O(r^{\omega})$ basic ring operations.
+
+\section{Multiplication of Skew Polynomials}
+
+As of this work, there are two major competitive algorithms for multiplying skew polynomials due to Puchinger \& Wachter-Zeh \cite{PUCHINGER2017b} as well as Caruso \& Le Borgne \cite{CaLe17}. 
+
+\subsection{The Puchinger \& Wachter-Zeh Algorithm}
+
+When $s \ll n$, the algorithm described by \cite[Th.7]{PUCHINGER2017b} has the better bit complexity. Set the factors $a = \sum_{i=0}^d a_i x^i$, $b = \sum_{i=0}^d b_i x^i $, and set $d^* = \lceil \sqrt{d + 1} \rceil $. We can split $a$ into a sum of $d^*$ terms of the form $a^{(i)} = \sum_{j=0}^{d^* - 1} a_{id^* + j}x^{id^* + j}$ such that $a = \sum_{i=0}^{d^* - 1} a^{(i)}$. This in turn splits the product $c$ into $d^*$ terms $c = \sum_{i=0}^{d^* - 1} c^{(i)}$ with $c^{(i)} = a^{(i)}b$. We can multiply through the expression for $c^{(i)}$:
+
+\begin{equation*}
+    c^{(i)} = \sum_{j=0}^{d^* - 1} a_{id^* + j}x^{id^* + j} \bigg( \sum_{k = 0}^{d} b_k x^k \bigg) = \sum_{k=0}^{d + d^* - 1} \bigg( \sum_{j=0}^{k} a_{id^* +j}\sigma^{id^* + j}(b_{k -j})x^{id^* + k} \bigg) 
+\end{equation*}
+
+Construct matrices $A, B, C$ such that:
+%\begin{equation}
+\begin{align}\label{multmatr}
+    A_{i,j} & = \sigma^{-id^*}(a_{id^* + j}) \\
+     B_{i,k} & = \sigma^{i}(b_{k-i}) \\ \label{multmatr2}
+    C_{i,k} & = \sigma^{-id^*}(c_k^{(i)})
+\end{align}
+%\end{equation}
+
+ Where $0 \leq i,j \leq d^* -1$, $0 \leq k \leq d + d^* - 1 $. We may refer to $A$ and $B$ as the \textit{left} and \textit{right} companion matrices respectively. Thus, we may compute $c$ by computing the matrix product $C = A \cdot B$ to determine the entries $\sigma^{-id^*}(c_k^{(i)})$, through which we may compute $c = \sum_{i = 0}^{d^* - 1}\sum_{k = 0}^{d + d^* - 1} c_k^{(i)}$. The computationally intensive steps are computing the action of $O(d^{1/2})$ distinct automorphisms $\sigma^{\pm id^*}, \sigma^i$ for up to $O(d^{3/2})$ elements, as well as computing the matrix product. Constructing the companion matrices $A,B$, as well as recovering the final result from the matrix product $AB$ takes overall time $(d^{3/2} n^{\theta} \log q)^{1 + o(1)}$, while computing the matrix product itself takes $O(d^{\min((\omega + 1)/2, 1.635)} M(n) )$ 
+ 
+ %When the cost of multiplication is considered, the total cumulative bit complexity is $(d^{(\omega + 1)/2} n^{\theta} \log q)^{1 + o(1)}$.
+
+\begin{algorithm}
+\caption{Skew Polynomial Multiplication \cite{PUCHINGER2017b}}
+\label{mpe1}
+\hspace*{\algorithmicindent} \textbf{Input} Skew polynomials $a, b \in \F_{q^n}\{x; \sigma\}$ of degree at most $d$. \\
+ \hspace*{\algorithmicindent} \textbf{Output} Skew polynomial $c$ such that $a \cdot b = c$ \\
+ \begin{algorithmic}[1]
+ \State Construct matrices $A, B$ as given in equations \ref{multmatr} and 2.
+ \State Compute the product $C = A \cdot B$.
+ \State Compute $c_k^{(i)} = \sigma^{-i d^*}(C_{i,k})$ 
+ \State Compute and return the product $c = \sum_{i = 0}^{d^* - 1}\sum_{k = 0}^{d + d^* - 1} c_k^{(i)}$
+ \end{algorithmic}
+\end{algorithm}
+
+\subsection{The Caruso \& Le Borgne Algorithm}
+
+Here we will provide an overview of the algorithm given in \cite[Sec.2]{CaLe17}. The critical insight of the algorithm is their proposition 1.6, which relates the action of skew-polynomials to commutative multiplication modulo $T^n - 1$. We restate the proposition here:
+
+\begin{proposition*}{\cite[Prop. 1.6]{CaLe17}}
+Let $T$ be a commutative variable, and fix a normal basis $s_0, \ldots, s_{n-1}$ for $\F_{q^n}/\F_q$ and let $s = \sum_{i=0}^{n-1} s_i T^i$. Further let $a = \sum_{i=0}^{n-1} a_i x^i\in \F_{q^n}\{x; \sigma\}$ and set $a(T) = \sum_{i=0}^{n-1} a_i T^i$, $c_i = a(s_i)$ and $c(T) = \sum c_iT^i$. Then
+
+\begin{equation*}
+    c(T) = a(T)s(T) \mod T^n -1
+\end{equation*}
+
+\end{proposition*}
+
+Namely, the above proposition reduces computing the action of $a$ on a normal basis to commutative polynomial multiplication when both are considered modulo $T^n - 1$. Given any two $a, b \in \F_{q^n}\{x; \sigma\}/(x^n - 1)$, the product $ab \in \F_{q^n}\{x; \sigma\}/(x^n - 1)$ can be computed as follows:
+
+
+\begin{algorithm}
+\caption{Skew Polynomial Multiplication \cite{CaLe17}}
+\label{smult2}
+\hspace*{\algorithmicindent} \textbf{Input} Skew polynomials $a, b \in \F_{q^n}\{x; \sigma\}$ of degree at most $d$. \\
+ \hspace*{\algorithmicindent} \textbf{Output} Skew polynomial $c$ such that $a \cdot b = c$ \\
+ \begin{algorithmic}[1]
+    \State Compute $c(T) = a(T) s(T)$, $c'(T) = b(T)s(T)$.
+    \State Extract from $c,c'$ the matrices $M_a,M_b$ respectively for the action of $a, b$ on $\F_{q^n}/\F_q$ where the domain uses the normal basis and the co-domain uses the standard basis.
+    \State Compute $M_a B M_b$ where $B$ is the change of basis matrix from the standard basis to the normal basis. This gives the action of the product $ab$ on $\F_{q^n}/\F_q$.
+    \State Given the product $M_aBM_b$ compute the corresponding $\hat{c}(T)$ such that $\hat{c}s^{-1}(T) = a(T)b(T)$ and extract the coefficients of $ab$
+ \end{algorithmic}
+\end{algorithm}
+
+%\begin{enumerate}
+%    \item Compute $c(T) = a(T) b(T)$, $c'(T) = a'(T)b(T)$.
+%    \item Extract from $c,c'$ the matrices $M,M'$ respectively for the action of $a, a'$ on $\L/\F_q$ where the domain uses the normal basis and the co-domain uses the standard basis.
+%    \item Compute $M B M'$ where $B$ is the change of basis matrix from the standard basis to the normal basis. This gives the action of the product $aa'$ on $\L/\F_q$.
+%    \item Given the product $MBM'$ compute the corresponding $\hat{c}(T)$ such that $\hat{c}b^{-1}(T) = a(T)a'(T)$ and extract the coefficients of $aa'$
+%\end{enumerate}
+
+The main computational bottlenecks are the computation of the matrix product $MBM'$, which costs $O(n^{\omega})$ $\F_q$ operations, as well as the construction of a normal basis for $\L$ over $\F_q$.
+
+A related algorithm is optimal when $\deg a + \deg b = d < n$. This version proceeds by computing the action of $b$ on a partial normal basis $\{s_0, \ldots, s_d \}$ of size $d + 1$ and determining the corresponding matrix. By computing the polynomial $c(T)$ as done previously, the matrix for the action of $a$ on the entire normal basis can be determined, and multiplying these two matrices together requires an $n\times n$ with $n\times (d+1)$ matrix product and gives the action of $ab$ on $\{s_0, \ldots, s_d\}$, from which $ab$ may be interpolated. Using their algorithms for doing interpolation and evaluation on a partial normal basis, they devise a run-time complexity of $O(d^{\omega - 2} nM(n))$ plus the cost of constructing a normal basis. 
+
+% This algorithm is later extended to products in $\F_{q^n}\{x; \sigma\}/Z(x^{n})$ where $Z \in \F_q[T]$ is the minimal polynomial of $\lambda \sigma'(\lambada) \cdot \cdot \sigma'^{n-1}(\lambda)$.
+
+\section{Multiplication of Matrices over Rings of Skew Polynomials}
+
+Given the intricacies of direct multiplication of skew polynomials, there are a few opportunities to examine whether improvements over naive estimates of the complexity of matrix multiplication can be achieved. For skew polynomial matrices $ a = \sum_{i=0}^{d} a_i x^i $, $ B = \sum_{i=0}^{d} b_i x^i $ where $a_i, b_i$ are $r \times r$ matrices with entries $a_i^{j,k}, b_i^{j,k} \in \F_{q^n}$ one can use any skew multiplication algorithm as a black box to obtain a matrix multiplication algorithm yielding a complexity $O(r^{\omega \textnormal{SM}(d)})$ where $\textnormal{SM}(d)$ denotes the complexity of the chosen skew multiplication algorithm. To improve on this, the general approach we will use to leverage existing multiplication algorithms can be summarised as follows:
+
+\begin{enumerate}
+    \item Apply a pre-processing step to the coefficients of the matrices $a, b$, which transforms matrices over $\F_{q^n}\{x; \sigma\}$ to matrices over a ring with more computationally efficient multiplication.
+    \item Apply a black box matrix multiplication algorithm. 
+    \item Recover the skew polynomial entries of the product.
+\end{enumerate}
+
+For multiplying skew polynomials modulo $x^n - 1$, we will recall that there is an isomorphism: $op: \sring / (x^n - 1) \to \enom_{\F_q}(\F_{q^n})$ taking skew polynomials right-modulo $x^n - 1$ into the $\F_q$-linear endomorphisms of $\F_{q^n}$. This sets a tight complexity bound of $O(r^{\omega}n^{\omega})$ for multiplication inside $\sring/(x^n - 1)$.
+
+Note that the transform sending a skew polynomial to its left or right companion matrix is linear. Therefore, the algorithm of Puchinger and Wachter-Zeh can be modified to fit the general spproach as follows:
+
+\begin{enumerate}
+    \item Compute $A$, an $r \times r$ matrix whose entries $A^{j,k}$ are square matrices of size $d^{*}$ over $\F_{q^n}$ equal to the left companion matrix of $a^{j,k} \sum_{i}a_{i}^{j,k}x^{i}$. Similarly, $B$ is an $r \times r$ matrix with rectangular entries $B^{j,k}$ corresponding to the right companion matrices of $b^{j,k} = \sum_{i}b_{i}^{j,k}x^{i}$
+    
+    %and the entries $B^{j,k}$ corresponding to the companion matrices for skew-polynomials $a^{j,k} = $, $b^{j,k} = \sum_{i}a_{i}^{j,k}x^{i}$ as given in equations \ref{multmatr} and 2.
+    \item Compute $C = A \cdot B$.
+    \item Apply the inverse transform of step 4 in algorithm 1 to compute the skew-polynomial corresponding to the block $C^{i,j} = \sum_{k = 1 }^{r} A^{i,k}B^{k,j}$.
+    
+\end{enumerate}
+
+Applying the naive algorithm directly yields a bit complexity of $r^{\omega}(d^{\frac{\omega + 1}{2}} n^{\theta} \log q)^{1 + o(1)}$ $+ d^{\min(\frac{\omega + 1}{2}, 1.635)} M(n)$. The above procedure however has an overall complexity consisting of two components: $(r^2 d^{\frac{\omega + 1}{2}} n^{\theta} \log q)^{1+o(1)}$ term coming from the entry-wise transform and inversion of the companion matrices and their product, as well as $r^{\omega}d^{\min(\frac{\omega + 1}{2}, 1.635)} M(n)$ coming from the black-box multiplication of the block matrices.
+
+When $n^{2/(5-\omega)} \leq d \leq n$, using the Small Degree Multiplication algorithm from \cite{CaLe17, Algorithm 5} is asymptotically optimal. This too admits a more nuanced extension of the algorithm to the matrix multiplication setting. In particular, one may perform the partial evaluations of the right-side operators $b^{j,k}$ and the total evaluation of $a^{j,k}$ entrywise, and then perform interpolation on the resulting block-wise product. In addition to the cost of constructing the normal basis, preparing the block entries, as well as the final interpolation step, takes time $O(r^2nM(n))$. The main bottleneck is the block-wise multiplication step, which takes overall time $O(d^{\omega -2}n^{2}r^{\omega})$, which eliminates any possible complexity gains over the naive approach.
+
+
+
+
+%For the more general case, we consider attempts to apply the Puchinger \& Wachter-Zeh algorithm as well as the Caruso \& Le Borgne Algorithm.
+
+
+
+
+
+
+%\newpage 
+\nocite{*}
+%\newpage
+\printbibliography
+
+\end{document}
